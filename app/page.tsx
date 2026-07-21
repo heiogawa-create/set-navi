@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import {
   ChangeEvent,
   ClipboardEvent,
@@ -140,36 +139,40 @@ const products: WaxProduct[] = [
 const lessonSteps = [
   {
     number: "01",
-    title: "まず、完全に乾かす",
-    text: "根元を起こしたい方向と逆から風を当て、最後に流したい方向へ整えます。形の8割はドライで決まります。",
-    tip: "前髪を上げるなら、下から温風→冷風で固定。",
-    className: "dry",
+    title: "根元を濡らして、寝ぐせをリセット",
+    text: "毛先だけでなく、つぶれた根元まで軽く濡らします。指を入れて地肌から動かすと、あとで狙った方向へ立ち上げやすくなります。",
+    tip: "びしょ濡れにせず、根元が動く程度でOK。",
+    image: "/tutorial/step-01.webp",
   },
   {
     number: "02",
-    title: "少量を透明まで伸ばす",
-    text: "目安は小豆1粒分。手のひらと指の間まで、白さが消えるように薄く伸ばします。足りなければ後から追加します。",
-    tip: "最初から付けすぎると、重さとベタつきの原因に。",
-    className: "spread",
+    title: "ドライで、スタイルの土台を作る",
+    text: "根元を起こしたい方向と逆から風を当て、最後に流したい方向へ整えます。形の8割はドライで決まります。",
+    tip: "前髪を上げるなら、下から温風→冷風で固定。",
+    image: "/tutorial/step-02.webp",
   },
   {
     number: "03",
-    title: "後ろから全体になじませる",
-    text: "後頭部→サイド→トップの順に、髪の内側へ空気を入れるようになじませます。前髪は手に残った分だけ。",
-    tip: "頭皮ではなく髪の中間〜毛先に付けます。",
-    className: "apply",
+    title: "少量を伸ばし、後ろからなじませる",
+    text: "小豆1粒分を手のひらと指の間まで透明になるように伸ばし、後頭部→サイド→トップの順で髪の中間から毛先へ。",
+    tip: "足りなければ追加。最初から付けすぎない。",
+    image: "/tutorial/step-03.webp",
   },
   {
     number: "04",
     title: "束をつまみ、輪郭を整える",
     text: "作りすぎたボリュームを抑えながら、欲しい場所だけ毛束をつまみます。最後に鏡を少し離して全体を確認。",
     tip: "キープしたい日は20〜30cm離してスプレー。",
-    className: "finish",
+    image: "/tutorial/step-04.webp",
   },
 ];
 
 const AMAZON_ASSOCIATE_TAG =
-  process.env.NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG?.trim() ?? "";
+  process.env.NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG?.trim() || "hei5731-22";
+
+const SALON_AFFILIATE_URL =
+  process.env.NEXT_PUBLIC_SALON_AFFILIATE_URL?.trim() ||
+  "https://beauty.hotpepper.jp/";
 
 function amazonUrl(query: string) {
   const params = new URLSearchParams({ k: query });
@@ -241,18 +244,7 @@ function ProductJar({ product }: { product: WaxProduct }) {
 
 function styleFromGoal(goal: string, selectedFinish: Finish): StyleProfile {
   const value = goal.trim().toLowerCase();
-  if (/松潤|松本\s*潤/.test(value)) {
-    return {
-      name: "大人の毛流れミディアム",
-      eyebrow: "松潤のような色気・毛流れをヒントに",
-      summary: "前髪を分け、顔まわりに柔らかな動きと自然なツヤを残す大人っぽいスタイル。",
-      finish: "ナチュラル",
-      direction: "ドライで根元を起こし、毛先は後ろへ逃がす",
-      tips: ["前髪は付けすぎず、手に残った分だけ", "トップは高さより毛流れを優先", "ツヤ系とハード系を1:1で混ぜてもOK"],
-      celebrityNote: "有名人名は本人の再現・識別ではなく、一般的な雰囲気やスタイルの参考語として解釈しています。",
-    };
-  }
-  if (/センター|目黒|めめ|平野|毛流れ|かきあげ/.test(value)) {
+  if (/センター|毛流れ|かきあげ/.test(value)) {
     return {
       name: "ナチュラルセンターパート",
       eyebrow: "清潔感と大人っぽさを両立",
@@ -272,7 +264,7 @@ function styleFromGoal(goal: string, selectedFinish: Finish): StyleProfile {
       tips: ["黒目の外側だけ前髪を下ろすと自然", "ハチ周りは握らず手のひらで抑える", "スプレーは根元中心"],
     };
   }
-  if (/マッシュ|束感|山田|菊池|無造作|ふわ/.test(value)) {
+  if (/マッシュ|束感|無造作|ふわ/.test(value)) {
     return {
       name: "無造作束感マッシュ",
       eyebrow: "作り込みすぎない軽い動き",
@@ -299,6 +291,9 @@ function styleFromGoal(goal: string, selectedFinish: Finish): StyleProfile {
     finish: selectedFinish,
     direction: "根元はふんわり、耳上と襟足はタイトに",
     tips: ["ワックスは小豆1粒から", "後ろ→横→上の順に付ける", "前髪は最後に整える"],
+    celebrityNote: /芸能人|みたい|っぽ/.test(value)
+      ? "人物の顔そのものではなく、髪型・質感・雰囲気の参考語として解釈しています。"
+      : undefined,
   };
 }
 
@@ -346,7 +341,7 @@ export default function Home() {
   const [mode, setMode] = useState<Mode>("dream");
   const [activePhoto, setActivePhoto] = useState<PhotoSlot>("current");
   const [photos, setPhotos] = useState<Record<PhotoSlot, string | null>>({ current: null, target: null });
-  const [goal, setGoal] = useState("松潤みたいな大人っぽい毛流れにしたい");
+  const [goal, setGoal] = useState("");
   const [ownedWax, setOwnedWax] = useState("");
   const [length, setLength] = useState<Length>("ショート");
   const [hairType, setHairType] = useState<HairType>("普通");
@@ -471,7 +466,7 @@ export default function Home() {
           <p className="pill"><Icon name="spark" size={17}/> メンズヘア診断</p>
           <h1>そのワックスで、<br/><em>どこまで変われる？</em></h1>
           <p className="hero-lead">
-            写真をアップするか、「松潤みたいになりたい」と入力するだけ。<br/>
+            写真を追加するか、「〇〇（芸能人）の髪形みたいにしたい」と入力するだけ。<br/>
             髪質と理想に合う髪型・市販ワックス・セット方法がわかります。
           </p>
           <div className="hero-actions">
@@ -491,7 +486,8 @@ export default function Home() {
 
         <div className="hero-card">
           <div className="hero-photo">
-            <Image src={photos.current ?? "/hero-man.webp"} alt={photos.current ? "追加した現在の髪型写真" : "自然な毛流れのメンズヘアスタイル例"} fill priority sizes="(max-width: 900px) 92vw, 47vw" unoptimized={Boolean(photos.current)}/>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={photos.current ?? "/hero-man.webp"} alt={photos.current ? "追加した現在の髪型写真" : "自然な毛流れのメンズヘアスタイル例"}/>
             {photos.current && (
               <button className="photo-remove" onClick={() => setPhotos((current) => ({ ...current, current: null }))} aria-label="写真を削除"><Icon name="close" size={18}/></button>
             )}
@@ -504,7 +500,7 @@ export default function Home() {
             <div className="or"><span/>または<span/></div>
             <label className="quick-message">
               <Icon name="search" size={22}/>
-              <input value={goal} onChange={(event) => setGoal(event.target.value)} aria-label="なりたい髪型" placeholder="松潤みたいになりたい"/>
+              <input value={goal} onChange={(event) => setGoal(event.target.value)} aria-label="なりたい髪型" placeholder="〇〇（芸能人）の髪形みたいにしたい" maxLength={120}/>
             </label>
           </div>
         </div>
@@ -597,7 +593,7 @@ export default function Home() {
 
               {mode === "dream" ? (
                 <label className="message-box">
-                  <textarea value={goal} onChange={(event) => setGoal(event.target.value)} placeholder="例：松潤みたいな大人っぽい毛流れにしたい" rows={3}/>
+                  <textarea value={goal} onChange={(event) => setGoal(event.target.value)} placeholder="〇〇（芸能人）の髪形みたいにしたい" rows={3} maxLength={120}/>
                   <span>{goal.length}/120</span>
                 </label>
               ) : (
@@ -641,7 +637,8 @@ export default function Home() {
             <>
               <div className="style-result-card">
                 <div className="style-visual">
-                  <Image src={photos.target ?? photos.current ?? "/hero-man.webp"} alt="診断したヘアスタイルの参考" fill sizes="(max-width: 760px) 100vw, 38vw" unoptimized={Boolean(photos.target || photos.current)}/>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={photos.target ?? photos.current ?? "/hero-man.webp"} alt="診断したヘアスタイルの参考"/>
                   <span>STYLE MATCH</span>
                 </div>
                 <div className="style-result-copy">
@@ -675,27 +672,45 @@ export default function Home() {
 
           <div className="affiliate-disclosure">
             <Icon name="shield" size={20}/>
-            <p><b>商品リンクについて</b><br/>Amazonへのリンクには、設定後にAmazonアソシエイトのトラッキングIDを付けられます。価格・在庫はAmazonの商品ページでご確認ください。</p>
+            <p><b>商品リンクについて</b><br/>セットナビはAmazonのアソシエイトとして、適格販売により収入を得ています。価格・在庫はAmazonの商品ページでご確認ください。</p>
           </div>
         </section>
       )}
+
+      <section className="salon-bridge" aria-labelledby="salon-heading">
+        <div className="salon-copy">
+          <p className="section-kicker">SALON MATCH</p>
+          <h2 id="salon-heading">カットから整えると、<br/>セットはもっと簡単になる。</h2>
+          <p>ワックスだけで再現しにくいときは、前髪の長さ・毛量・トップのレイヤーをプロに相談。診断結果や理想の画像を見せると、希望が伝わりやすくなります。</p>
+          <ul>
+            <li><Icon name="check" size={17}/> メンズカットが得意なサロンを比較</li>
+            <li><Icon name="check" size={17}/> スタイル写真・口コミ・空き時間を確認</li>
+          </ul>
+        </div>
+        <div className="salon-action-card">
+          <span className="salon-icon"><Icon name="spark" size={28}/></span>
+          <p>理想に近いスタイルを見つけたら</p>
+          <h3>その髪型が得意な美容師へ</h3>
+          <a href={SALON_AFFILIATE_URL} target="_blank" rel="sponsored nofollow noopener noreferrer">
+            ホットペッパービューティーで探す <Icon name="external" size={18}/>
+          </a>
+          <small>外部の美容室検索・予約サイトへ移動します</small>
+        </div>
+      </section>
 
       <section className="lesson-section" id="lesson">
         <div className="section-heading centered light">
           <p className="section-kicker">HOW TO STYLE</p>
           <h2>ワックスの付け方、基本の4ステップ</h2>
-          <p>初心者が失敗しやすいポイントを、アニメーションで1つずつ確認できます。</p>
+          <p>初心者が失敗しやすいポイントを、実写で1つずつ確認できます。</p>
         </div>
 
         <div className="lesson-player">
-          <div className={`lesson-illustration ${lesson.className}`}>
+          <div className="lesson-photo">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={lesson.image} alt={`${lesson.title}の実演写真`}/>
+            <div className="lesson-photo-shade"/>
             <div className="lesson-number">{lesson.number}</div>
-            <div className="head-illustration">
-              <div className="hair-shape"><i/><i/><i/><i/><i/></div>
-              <div className="face-shape"><span/></div>
-              <div className="motion-lines"><i/><i/><i/></div>
-              {lesson.className === "spread" && <div className="wax-dot"/>}
-            </div>
             <button className="play-button" onClick={() => setLessonPlaying((value) => !value)} aria-label={lessonPlaying ? "一時停止" : "再生"}>
               <Icon name={lessonPlaying ? "pause" : "play"} size={26}/>
             </button>
@@ -726,7 +741,7 @@ export default function Home() {
         <a className="brand footer-brand" href="#top"><span className="brand-mark">S</span><span>セットナビ</span></a>
         <p>メンズの髪型・ワックス選びを、もっと分かりやすく。</p>
         <div><a href="#diagnosis">診断</a><a href="#wax-list">ワックス</a><a href="#lesson">使い方</a></div>
-        <small>※ 診断はスタイリングの目安です。使用前に各商品の注意事項をご確認ください。 © 2026 SET NAVI</small>
+        <small>※ 診断はスタイリングの目安です。使用前に各商品の注意事項をご確認ください。商品・美容室予約リンクにはアフィリエイトリンクを含む場合があります。 © 2026 SET NAVI</small>
       </footer>
     </main>
   );
