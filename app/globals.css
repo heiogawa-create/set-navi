@@ -1523,6 +1523,22 @@ img {
   margin: 6px 0 0;
 }
 
+.owned-style-howto {
+  align-items: flex-start;
+  border-top: 1px dashed #e4e7eb;
+  color: #828c99 !important;
+  display: flex;
+  gap: 4px;
+  margin-top: 8px !important;
+  padding-top: 8px;
+}
+
+.owned-style-howto svg {
+  color: var(--orange);
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
 .style-photo-note {
   color: #8a93a1;
   display: block;

@@ -47,6 +47,7 @@ type OwnedStyle = {
   name: string;
   image: string;
   description: string;
+  howTo: string;
 };
 
 const products: WaxProduct[] = [
@@ -347,46 +348,55 @@ const ownedStyleCatalog: Record<string, OwnedStyle> = {
     name: "ウェットセンターパート",
     image: "/style-models/wet-center-part.webp",
     description: "根元を立ち上げ、左右へ流す。ツヤと毛流れを見せるスタイル。",
+    howTo: "生乾きの髪に指の腹でなじませ、コームで中央から分けてから根元を立ち上げるとツヤ感が出ます。",
   },
   "ツヤ感パーマ": {
     name: "ツヤ感パーマ",
     image: "/style-models/glossy-perm.webp",
     description: "カールをつぶさず、濡れ感のある細い束を残すスタイル。",
+    howTo: "手のひらで薄くのばし、カールを潰さないよう下から持ち上げるようにもみ込みます。",
   },
   "タイトな七三スタイル": {
     name: "タイトな七三スタイル",
     image: "/style-models/tight-side-part.webp",
     description: "分け目を作り、サイドを抑えた端正で清潔感のあるスタイル。",
+    howTo: "多めに指へ取り、根元からしっかり押さえつけて塗布したあと、コームで七三に流して固定します。",
   },
   "無造作マッシュ": {
     name: "無造作マッシュ",
     image: "/style-models/messy-mash.webp",
     description: "丸いシルエットを残し、表面にランダムな動きを加えるスタイル。",
+    howTo: "8割乾かした髪に少量をもみ込み、指先で毛束をつまんで表面にランダムな動きをつけます。",
   },
   "爽やかアップバング": {
     name: "爽やかアップバング",
     image: "/style-models/up-bang.webp",
     description: "前髪を根元から上げ、トップに高さを出す爽やかな短髪スタイル。",
+    howTo: "前髪の根元に少量をつけ、指を上下に細かく動かしながら根元から立ち上げます。",
   },
   "束感ショート": {
     name: "束感ショート",
     image: "/style-models/textured-short.webp",
     description: "細い毛束を散らし、立体感と動きを作る王道ショート。",
+    howTo: "毛先中心に少量をもみ込み、指先でつまむようにして細い毛束を作ります。",
   },
   "ナチュラルセンターパート": {
     name: "ナチュラルセンターパート",
     image: "/style-models/natural-center-part.webp",
     description: "前髪を柔らかく分け、自然な毛流れで大人っぽく見せるスタイル。",
+    howTo: "少量を全体に薄くなじませ、指で軽く真ん中に流すだけで自然な毛流れになります。",
   },
   "ニュアンスマッシュ": {
     name: "ニュアンスマッシュ",
     image: "/style-models/nuance-mash.webp",
     description: "丸みのある形に、緩い曲線とふんわりした動きを足すスタイル。",
+    howTo: "手ぐしで全体に薄くのばし、丸みを潰さないよう指先で軽くツイストを加えます。",
   },
   "毛流れショート": {
     name: "毛流れショート",
     image: "/style-models/flow-short.webp",
     description: "トップから斜め後ろへ流し、柔らかな立体感を作るスタイル。",
+    howTo: "根元から少量をなじませ、トップから斜め後ろへとかすように毛流れを作ります。",
   },
 };
 
@@ -885,12 +895,13 @@ function OwnedWaxResult({ product, typedName }: { product: WaxProduct | null; ty
               <div className="owned-style-copy">
                 <h4>{style.name}</h4>
                 <p>{style.description}</p>
+                <p className="owned-style-howto"><Icon name="spark" size={12}/> {style.howTo}</p>
               </div>
             </article>
           ))}
         </div>
         <small className="style-photo-note">※モデル写真は仕上がりの参考イメージです。髪の長さ・カット・髪質によって再現度は異なります。</small>
-        <div className="owned-tip"><Icon name="spark"/><p><b>付け方のコツ</b><br/>{product?.shine && product.shine >= 4 ? "少し水分を残してから、内側へ少量ずつ揉み込むとツヤが均一になります。" : "完全に乾かしてから小豆1粒分を伸ばし、後頭部→サイド→トップの順になじませます。"}</p></div>
+        <div className="owned-tip"><Icon name="spark"/><p><b>基本のつけ方</b><br/>{product?.shine && product.shine >= 4 ? "少し水分を残してから、内側へ少量ずつ揉み込むとツヤが均一になります。" : "完全に乾かしてから小豆1粒分を伸ばし、後頭部→サイド→トップの順になじませます。"}</p></div>
         {product && <div className="owned-links"><a className="amazon-button" href={amazonUrl(product.amazonQuery)} target="_blank" rel="sponsored nofollow noopener noreferrer">同じ商品をAmazonで見る <Icon name="external" size={17}/></a><a href={youtubeUrl(product.amazonQuery)} target="_blank" rel="noopener noreferrer nofollow">使い方動画を探す <Icon name="external" size={15}/></a></div>}
       </div>
     </div>
