@@ -342,8 +342,10 @@ img {
 }
 
 .hero-photo img {
+  height: 100%;
   object-fit: cover;
   object-position: 50% 31%;
+  width: 100%;
 }
 
 .photo-remove {
@@ -1129,8 +1131,12 @@ img {
 }
 
 .style-visual img {
+  height: 100%;
+  inset: 0;
   object-fit: cover;
   object-position: center top;
+  position: absolute;
+  width: 100%;
 }
 
 .style-visual > span {
@@ -1495,6 +1501,119 @@ img {
   text-decoration: underline;
 }
 
+.salon-bridge {
+  align-items: center;
+  background:
+    radial-gradient(circle at 85% 12%, rgba(255, 92, 26, .13), transparent 26%),
+    #fff7f1;
+  display: grid;
+  gap: clamp(35px, 7vw, 100px);
+  grid-template-columns: minmax(0, 1.1fr) minmax(350px, .9fr);
+  padding: 84px clamp(24px, 9vw, 145px);
+}
+
+.salon-copy {
+  max-width: 650px;
+}
+
+.salon-copy h2 {
+  color: var(--navy);
+  font-size: clamp(31px, 4vw, 52px);
+  letter-spacing: -.055em;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.salon-copy > p:not(.section-kicker) {
+  color: #5f6c7f;
+  font-size: 13px;
+  margin: 18px 0 21px;
+  max-width: 610px;
+}
+
+.salon-copy ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.salon-copy li {
+  align-items: center;
+  color: #34455d;
+  display: flex;
+  font-size: 11px;
+  font-weight: 750;
+  gap: 7px;
+}
+
+.salon-copy li svg {
+  color: var(--orange);
+}
+
+.salon-action-card {
+  background: white;
+  border: 1px solid rgba(7, 26, 56, .08);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 34px;
+  text-align: center;
+}
+
+.salon-icon {
+  align-items: center;
+  background: #ffeadb;
+  border-radius: 50%;
+  color: var(--orange);
+  display: flex;
+  height: 58px;
+  justify-content: center;
+  margin: 0 auto 17px;
+  width: 58px;
+}
+
+.salon-action-card > p {
+  color: #7a8595;
+  font-size: 10px;
+  margin: 0;
+}
+
+.salon-action-card h3 {
+  color: var(--navy);
+  font-size: clamp(21px, 2.5vw, 30px);
+  letter-spacing: -.04em;
+  margin: 3px 0 21px;
+}
+
+.salon-action-card > a {
+  align-items: center;
+  background: var(--navy);
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  font-size: 12px;
+  font-weight: 850;
+  gap: 9px;
+  justify-content: center;
+  min-height: 54px;
+  padding: 0 17px;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.salon-action-card > a:hover {
+  background: var(--navy-2);
+  transform: translateY(-1px);
+}
+
+.salon-action-card small {
+  color: #929aa6;
+  display: block;
+  font-size: 8px;
+  margin-top: 10px;
+}
+
 .lesson-section {
   background: var(--navy);
   color: white;
@@ -1522,151 +1641,45 @@ img {
   overflow: hidden;
 }
 
-.lesson-illustration {
-  align-items: center;
-  background:
-    radial-gradient(circle at 50% 42%, rgba(255,255,255,.08), transparent 34%),
-    linear-gradient(145deg, #f3eee7, #d9d0c3);
-  display: flex;
-  justify-content: center;
+.lesson-photo {
+  background: #d9d0c3;
   min-height: 460px;
   overflow: hidden;
   position: relative;
 }
 
+.lesson-photo > img {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  transition: opacity 220ms ease, transform 500ms ease;
+  width: 100%;
+}
+
+.lesson-photo:hover > img {
+  transform: scale(1.015);
+}
+
+.lesson-photo-shade {
+  background: linear-gradient(180deg, rgba(7, 26, 56, .04) 45%, rgba(7, 26, 56, .58) 100%);
+  inset: 0;
+  position: absolute;
+}
+
 .lesson-number {
-  color: rgba(7, 26, 56, .07);
+  color: rgba(255, 255, 255, .9);
   font-family: Georgia, serif;
-  font-size: 160px;
+  font-size: 86px;
   font-weight: 700;
-  left: 18px;
+  left: 25px;
   line-height: 1;
   position: absolute;
-  top: 13px;
-}
-
-.head-illustration {
-  height: 280px;
-  position: relative;
-  width: 250px;
-}
-
-.face-shape {
-  background: linear-gradient(145deg, #f5cfad, #dba37e);
-  border-radius: 47% 47% 44% 48%;
-  height: 185px;
-  left: 56px;
-  position: absolute;
-  top: 72px;
-  width: 139px;
-}
-
-.face-shape::before,
-.face-shape::after {
-  background: var(--navy);
-  border-radius: 999px;
-  content: "";
-  height: 3px;
-  position: absolute;
-  top: 76px;
-  width: 18px;
-}
-
-.face-shape::before { left: 26px; }
-.face-shape::after { right: 26px; }
-
-.face-shape span {
-  border-bottom: 2px solid rgba(83,44,27,.55);
-  border-radius: 50%;
-  bottom: 34px;
-  height: 12px;
-  left: 54px;
-  position: absolute;
-  width: 31px;
-}
-
-.hair-shape {
-  background: var(--navy);
-  border-radius: 55% 45% 34% 28%;
-  height: 126px;
-  left: 42px;
-  position: absolute;
-  top: 27px;
-  transform: rotate(-3deg);
-  width: 169px;
+  text-shadow: 0 3px 24px rgba(7, 26, 56, .28);
+  top: 22px;
   z-index: 2;
 }
-
-.hair-shape::after {
-  background: var(--navy);
-  border-radius: 0 0 70% 20%;
-  content: "";
-  height: 58px;
-  position: absolute;
-  right: -4px;
-  top: 66px;
-  transform: rotate(12deg);
-  width: 31px;
-}
-
-.hair-shape i {
-  background: #142e53;
-  border-radius: 99% 0 99% 0;
-  height: 83px;
-  position: absolute;
-  top: -15px;
-  transform-origin: bottom;
-  width: 27px;
-}
-
-.hair-shape i:nth-child(1) { left: 13px; transform: rotate(-30deg); }
-.hair-shape i:nth-child(2) { left: 45px; transform: rotate(-15deg); }
-.hair-shape i:nth-child(3) { left: 76px; transform: rotate(1deg); }
-.hair-shape i:nth-child(4) { left: 108px; transform: rotate(16deg); }
-.hair-shape i:nth-child(5) { left: 134px; transform: rotate(31deg); }
-
-.motion-lines i {
-  border-top: 3px solid var(--orange);
-  border-radius: 50%;
-  display: block;
-  height: 22px;
-  opacity: .8;
-  position: absolute;
-  width: 52px;
-  z-index: 4;
-}
-
-.motion-lines i:nth-child(1) { left: 2px; top: 52px; transform: rotate(-22deg); }
-.motion-lines i:nth-child(2) { right: -8px; top: 83px; transform: rotate(28deg); }
-.motion-lines i:nth-child(3) { left: 11px; top: 139px; transform: rotate(-8deg); }
-
-.wax-dot {
-  animation: waxPulse 1.4s ease-in-out infinite;
-  background: var(--orange);
-  border-radius: 50%;
-  height: 17px;
-  left: 21px;
-  position: absolute;
-  top: 205px;
-  width: 17px;
-}
-
-.lesson-illustration.dry .hair-shape i {
-  animation: hairLift 1.5s ease-in-out infinite alternate;
-}
-
-.lesson-illustration.apply .hair-shape {
-  animation: hairRuffle 1.7s ease-in-out infinite alternate;
-}
-
-.lesson-illustration.finish .motion-lines i {
-  animation: lineFade 1.3s ease-in-out infinite alternate;
-}
-
-@keyframes hairLift { to { transform: translateY(-9px) rotate(-4deg); } }
-@keyframes hairRuffle { to { transform: translateX(5px) rotate(3deg); } }
-@keyframes lineFade { to { opacity: .15; transform: translateX(8px); } }
-@keyframes waxPulse { 50% { box-shadow: 0 0 0 14px rgba(255,92,26,.16); transform: scale(.8); } }
 
 .play-button {
   align-items: center;
@@ -1943,8 +1956,17 @@ footer > small {
     grid-template-columns: 1fr;
   }
 
-  .lesson-illustration {
+  .lesson-photo {
     min-height: 390px;
+  }
+
+  .salon-bridge {
+    grid-template-columns: 1fr;
+  }
+
+  .salon-action-card {
+    max-width: 620px;
+    width: 100%;
   }
 }
 
@@ -2017,7 +2039,8 @@ footer > small {
   .section,
   .diagnosis-section,
   .result-section,
-  .lesson-section {
+  .lesson-section,
+  .salon-bridge {
     padding-left: 17px;
     padding-right: 17px;
   }
@@ -2128,20 +2151,33 @@ footer > small {
     flex-direction: column;
   }
 
-  .lesson-illustration {
+  .lesson-photo {
     min-height: 340px;
   }
 
-  .head-illustration {
-    transform: scale(.82);
-  }
-
   .lesson-number {
-    font-size: 115px;
+    font-size: 68px;
+    left: 18px;
+    top: 18px;
   }
 
   .lesson-copy {
     padding: 33px 22px 37px;
+  }
+
+  .salon-bridge {
+    gap: 30px;
+    padding-bottom: 55px;
+    padding-top: 55px;
+  }
+
+  .salon-copy h2 br {
+    display: none;
+  }
+
+  .salon-action-card {
+    border-radius: 15px;
+    padding: 27px 18px;
   }
 
   .final-cta {
