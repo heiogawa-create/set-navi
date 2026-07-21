@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import Image from "next/image";
 
 type Mode = "dream" | "owned";
 type PhotoSlot = "current" | "target";
@@ -41,6 +42,12 @@ type StyleProfile = {
   direction: string;
   tips: string[];
   celebrityNote?: string;
+};
+
+type OwnedStyle = {
+  name: string;
+  image: string;
+  description: string;
 };
 
 const products: WaxProduct[] = [
@@ -336,15 +343,63 @@ function scoreProduct(
   return Math.min(98, Math.max(61, score));
 }
 
+const ownedStyleCatalog: Record<string, OwnedStyle> = {
+  "ウェットセンターパート": {
+    name: "ウェットセンターパート",
+    image: "/style-models/wet-center-part.webp",
+    description: "根元を立ち上げ、左右へ流す。ツヤと毛流れを見せるスタイル。",
+  },
+  "ツヤ感パーマ": {
+    name: "ツヤ感パーマ",
+    image: "/style-models/glossy-perm.webp",
+    description: "カールをつぶさず、濡れ感のある細い束を残すスタイル。",
+  },
+  "タイトな七三スタイル": {
+    name: "タイトな七三スタイル",
+    image: "/style-models/tight-side-part.webp",
+    description: "分け目を作り、サイドを抑えた端正で清潔感のあるスタイル。",
+  },
+  "無造作マッシュ": {
+    name: "無造作マッシュ",
+    image: "/style-models/messy-mash.webp",
+    description: "丸いシルエットを残し、表面にランダムな動きを加えるスタイル。",
+  },
+  "爽やかアップバング": {
+    name: "爽やかアップバング",
+    image: "/style-models/up-bang.webp",
+    description: "前髪を根元から上げ、トップに高さを出す爽やかな短髪スタイル。",
+  },
+  "束感ショート": {
+    name: "束感ショート",
+    image: "/style-models/textured-short.webp",
+    description: "細い毛束を散らし、立体感と動きを作る王道ショート。",
+  },
+  "ナチュラルセンターパート": {
+    name: "ナチュラルセンターパート",
+    image: "/style-models/natural-center-part.webp",
+    description: "前髪を柔らかく分け、自然な毛流れで大人っぽく見せるスタイル。",
+  },
+  "ニュアンスマッシュ": {
+    name: "ニュアンスマッシュ",
+    image: "/style-models/nuance-mash.webp",
+    description: "丸みのある形に、緩い曲線とふんわりした動きを足すスタイル。",
+  },
+  "毛流れショート": {
+    name: "毛流れショート",
+    image: "/style-models/flow-short.webp",
+    description: "トップから斜め後ろへ流し、柔らかな立体感を作るスタイル。",
+  },
+};
+
 function ownedStyles(product: WaxProduct | null, typedName: string) {
   const haystack = `${product?.type ?? ""} ${product?.strengths.join(" ") ?? ""} ${typedName}`;
   if (/グリース|グロス|ツヤ|ウェット/.test(haystack)) {
-    return ["ウェットセンターパート", "ツヤ感パーマ", "タイトな七三スタイル"];
+    return ["ウェットセンターパート", "ツヤ感パーマ", "タイトな七三スタイル"].map((name) => ownedStyleCatalog[name]);
   }
   if (/クレイ|マット|立ち上げ/.test(haystack)) {
-    return ["無造作マッシュ", "爽やかアップバング", "束感ショート"];
+    return ["無造作マッシュ", "爽やかアップバング", "束感ショート"].map((name) => ownedStyleCatalog[name]);
   }
-  return ["ナチュラルセンターパート", "ニュアンスマッシュ", "毛流れショート"];
+  return ["ナチュラルセンターパート", "ニュアンスマッシュ", "毛流れショート"].map((name) => ownedStyleCatalog[name]);
 }
 
 export default function Home() {
@@ -818,7 +873,23 @@ function OwnedWaxResult({ product, typedName }: { product: WaxProduct | null; ty
       <div className="possible-styles">
         <p className="section-kicker">POSSIBLE STYLES</p>
         <h3>このワックスで狙いやすい髪型</h3>
-        <div className="style-chips">{styles.map((style, index) => <div key={style}><b>0{index + 1}</b><span>{style}</span><small>{index === 0 ? "最もおすすめ" : index === 1 ? "アレンジしやすい" : "量を調整して挑戦"}</small></div>)}</div>
+        <p className="style-photo-lead">文字だけでは分かりにくい仕上がりを、モデル写真で比較できます。</p>
+        <div className="owned-style-cards">
+          {styles.map((style, index) => (
+            <article className="owned-style-card" key={style.name}>
+              <div className="owned-style-photo">
+                <Image src={style.image} alt={`${style.name}の男性モデル参考写真`} width={720} height={900}/>
+                <b>0{index + 1}</b>
+                <span>{index === 0 ? "最もおすすめ" : index === 1 ? "アレンジしやすい" : "量を調整して挑戦"}</span>
+              </div>
+              <div className="owned-style-copy">
+                <h4>{style.name}</h4>
+                <p>{style.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <small className="style-photo-note">※モデル写真は仕上がりの参考イメージです。髪の長さ・カット・髪質によって再現度は異なります。</small>
         <div className="owned-tip"><Icon name="spark"/><p><b>付け方のコツ</b><br/>{product?.shine && product.shine >= 4 ? "少し水分を残してから、内側へ少量ずつ揉み込むとツヤが均一になります。" : "完全に乾かしてから小豆1粒分を伸ばし、後頭部→サイド→トップの順になじませます。"}</p></div>
         {product && <div className="owned-links"><a className="amazon-button" href={amazonUrl(product.amazonQuery)} target="_blank" rel="sponsored nofollow noopener noreferrer">同じ商品をAmazonで見る <Icon name="external" size={17}/></a><a href={youtubeUrl(product.amazonQuery)} target="_blank" rel="noopener noreferrer nofollow">使い方動画を探す <Icon name="external" size={15}/></a></div>}
       </div>
