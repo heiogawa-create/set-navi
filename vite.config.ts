@@ -1,4 +1,3 @@
-import { fileURLToPath, URL } from "node:url";
 import vinext from "vinext";
 import { defineConfig } from "vite";
 import hostingConfig from "./.openai/hosting.json";
@@ -51,13 +50,6 @@ export default defineConfig(async () => {
       ...(isCodexSeatbeltSandbox
         ? { watch: { useFsEvents: false, usePolling: true } }
         : {}),
-    },
-    resolve: {
-      alias: {
-        "next/image": fileURLToPath(
-          new URL("./app/direct-image.tsx", import.meta.url),
-        ),
-      },
     },
     plugins: [
       vinext(),
