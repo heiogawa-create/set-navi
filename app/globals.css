@@ -1559,7 +1559,21 @@ img {
   border-radius: 20px;
   box-shadow: var(--shadow);
   padding: 34px;
+  position: relative;
   text-align: center;
+}
+
+.pr-badge {
+  background: #eef0f3;
+  border-radius: 999px;
+  color: #657185;
+  font-size: 8px;
+  font-weight: 850;
+  left: 17px;
+  letter-spacing: .08em;
+  padding: 4px 8px;
+  position: absolute;
+  top: 17px;
 }
 
 .salon-icon {
@@ -1587,11 +1601,15 @@ img {
   margin: 3px 0 21px;
 }
 
-.salon-action-card > a {
+.salon-actions {
+  display: grid;
+  gap: 10px;
+  position: relative;
+}
+
+.salon-button {
   align-items: center;
-  background: var(--navy);
   border-radius: 10px;
-  color: white;
   display: flex;
   font-size: 12px;
   font-weight: 850;
@@ -1602,16 +1620,76 @@ img {
   transition: background 180ms ease, transform 180ms ease;
 }
 
-.salon-action-card > a:hover {
+.salon-button.primary {
+  background: var(--navy);
+  color: white;
+}
+
+.salon-button.primary:hover {
   background: var(--navy-2);
   transform: translateY(-1px);
 }
 
-.salon-action-card small {
+.salon-button.ozmall {
+  background: #fff;
+  border: 1px solid #dfe3e8;
+  color: var(--navy);
+  justify-content: flex-start;
+  min-height: 70px;
+  padding: 5px 13px 5px 7px;
+  text-align: left;
+}
+
+.salon-button.ozmall:hover {
+  background: #fff9f5;
+  border-color: rgba(255, 92, 26, .45);
+  transform: translateY(-1px);
+}
+
+.salon-button.ozmall > img {
+  border-radius: 6px;
+  flex: 0 0 auto;
+  height: 60px;
+  object-fit: contain;
+  width: 100px;
+}
+
+.salon-button.ozmall > span {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  line-height: 1.35;
+}
+
+.salon-button.ozmall b {
+  font-size: 13px;
+}
+
+.salon-button.ozmall small {
+  color: #6e7989;
+  font-size: 9px;
+}
+
+.affiliate-impression {
+  height: 1px;
+  position: absolute;
+  width: 1px;
+}
+
+.salon-note {
   color: #929aa6;
   display: block;
   font-size: 8px;
   margin-top: 10px;
+}
+
+.salon-disclosure {
+  border-top: 1px solid #eceef1;
+  color: #7b8492 !important;
+  font-size: 8px !important;
+  line-height: 1.6;
+  margin: 13px 0 0 !important;
+  padding-top: 11px;
 }
 
 .lesson-section {
@@ -2178,6 +2256,15 @@ footer > small {
   .salon-action-card {
     border-radius: 15px;
     padding: 27px 18px;
+  }
+
+  .salon-button.ozmall {
+    padding-right: 10px;
+  }
+
+  .salon-button.ozmall > img {
+    height: 54px;
+    width: 90px;
   }
 
   .final-cta {

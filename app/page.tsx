@@ -170,9 +170,19 @@ const lessonSteps = [
 const AMAZON_ASSOCIATE_TAG =
   process.env.NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG?.trim() || "hei5731-22";
 
-const SALON_AFFILIATE_URL =
-  process.env.NEXT_PUBLIC_SALON_AFFILIATE_URL?.trim() ||
-  "https://beauty.hotpepper.jp/";
+const RAKUTEN_BEAUTY_AFFILIATE_URL =
+  process.env.NEXT_PUBLIC_RAKUTEN_BEAUTY_AFFILIATE_URL?.trim() ||
+  "https://hb.afl.rakuten.co.jp/hsc/55f27dbe.e2299044.55f27dbf.c25b0d09/?link_type=hybrid_url&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJoeWJyaWRfdXJsIiwiY29sIjoxLCJjYXQiOjEsImJhbiI6MTQ5NzgyMSwiYW1wIjpmYWxzZX0%3D";
+
+const OZMALL_AFFILIATE_URL =
+  process.env.NEXT_PUBLIC_OZMALL_AFFILIATE_URL?.trim() ||
+  "https://px.a8.net/svt/ejp?a8mat=4B85P1+CQFSKY+3UQG+61C2P";
+
+const OZMALL_CREATIVE_URL =
+  "https://www21.a8.net/svt/bgt?aid=260721109770&wid=001&eno=01&mid=s00000017980001014000&mc=1";
+
+const OZMALL_IMPRESSION_URL =
+  "https://www13.a8.net/0.gif?a8mat=4B85P1+CQFSKY+3UQG+61C2P";
 
 function amazonUrl(query: string) {
   const params = new URLSearchParams({ k: query });
@@ -688,13 +698,26 @@ export default function Home() {
           </ul>
         </div>
         <div className="salon-action-card">
+          <span className="pr-badge">PR</span>
           <span className="salon-icon"><Icon name="spark" size={28}/></span>
           <p>理想に近いスタイルを見つけたら</p>
           <h3>その髪型が得意な美容師へ</h3>
-          <a href={SALON_AFFILIATE_URL} target="_blank" rel="sponsored nofollow noopener noreferrer">
-            ホットペッパービューティーで探す <Icon name="external" size={18}/>
-          </a>
-          <small>外部の美容室検索・予約サイトへ移動します</small>
+          <div className="salon-actions">
+            <a className="salon-button primary" href={RAKUTEN_BEAUTY_AFFILIATE_URL} target="_blank" rel="sponsored nofollow noopener noreferrer">
+              楽天ビューティで近くの美容室を探す <Icon name="external" size={18}/>
+            </a>
+            <a className="salon-button ozmall" href={OZMALL_AFFILIATE_URL} target="_blank" rel="sponsored nofollow noopener noreferrer">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img width="100" height="60" alt="OZmallのヘアサロン予約" src={OZMALL_CREATIVE_URL}/>
+              <span><b>OZmall</b><small>厳選ヘアサロンを探す</small></span>
+              <Icon name="external" size={18}/>
+            </a>
+            {/* A8.netが発行したOZmall広告のインプレッション計測タグ */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="affiliate-impression" width="1" height="1" src={OZMALL_IMPRESSION_URL} alt="" aria-hidden="true"/>
+          </div>
+          <small className="salon-note">外部の美容室検索・予約サイトへ移動します</small>
+          <p className="salon-disclosure">本ページはアフィリエイト広告を利用しています。リンク先で予約された場合、運営者に報酬が発生することがあります。</p>
         </div>
       </section>
 
