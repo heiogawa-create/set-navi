@@ -9,7 +9,6 @@ import {
   useRef,
   useState,
 } from "react";
-import Image from "next/image";
 
 type Mode = "dream" | "owned";
 type PhotoSlot = "current" | "target";
@@ -878,7 +877,8 @@ function OwnedWaxResult({ product, typedName }: { product: WaxProduct | null; ty
           {styles.map((style, index) => (
             <article className="owned-style-card" key={style.name}>
               <div className="owned-style-photo">
-                <Image src={style.image} alt={`${style.name}の男性モデル参考写真`} width={720} height={900}/>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={style.image} alt={`${style.name}の男性モデル参考写真`} width={720} height={900} loading="lazy"/>
                 <b>0{index + 1}</b>
                 <span>{index === 0 ? "最もおすすめ" : index === 1 ? "アレンジしやすい" : "量を調整して挑戦"}</span>
               </div>
